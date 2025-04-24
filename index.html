@@ -9,31 +9,24 @@
       rel="stylesheet"
     />
     <style>
+      html,
+      body {
+        height: 100%;
+      }
       body {
         margin: 0;
         font-family: "Fredoka", sans-serif;
-        background: #dfffe2;
+        background: #fdf3dd;
         color: #2c5f2d;
         text-align: center;
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
       }
 
-      .header {
-        padding: 40px 20px 20px;
-        position: relative;
-        z-index: 2;
-      }
-
-      .header img {
-        width: 300px;
-        max-width: 80%;
-        border-radius: 20px;
-      }
-
-      .title {
-        font-size: 2.5rem;
-        font-weight: 600;
-        margin: 20px 0 10px;
+      .title img {
+        width: 90%;
       }
 
       .subtitle {
@@ -45,91 +38,80 @@
       .details {
         background: white;
         max-width: 600px;
+        width: 80vw;
         margin: auto;
         padding: 30px;
-        border-radius: 50%;
+        border-radius: 5%;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         position: relative;
-        z-index: 2;
       }
 
       .details p {
         font-size: 1.2rem;
         margin: 10px 0;
       }
-
-      .leaf-decor {
-        font-size: 2rem;
-        margin: 20px 0;
+      .details a {
+        color: #2c5f2d;
       }
 
-      .circle {
-        width: 15px;
-        height: 15px;
+      .venue {
+        border: 1px dashed;
+        padding: 5px 15px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      .playlist {
+        padding: 30px;
+      }
+
+      .ball {
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         position: absolute;
-        animation: float 20s infinite ease-in-out;
-      }
-
-      .red {
-        background: red;
-      }
-      .black {
-        background: black;
-      }
-      .white {
-        background: white;
-        border: 1px solid #ccc;
+        background-image: url("img/pokeball.png");
+        background-size: cover;
+        background-position: center;
       }
 
       .animated {
-        animation: throb 1.5s ease-in-out infinite !important;
-        z-index: 3;
-      }
-
-      @keyframes float {
-        0% {
-          transform: translate(0, 0);
-        }
-        50% {
-          transform: translate(10px, 10px);
-        }
-        100% {
-          transform: translate(0, 0);
-        }
+        animation: throb 2s ease-in-out infinite;
       }
 
       @keyframes throb {
         0% {
           transform: scale(1);
         }
-        25% {
-          transform: scale(2);
+        20% {
+          transform: scale(1.4);
+        }
+        30% {
+          transform: scale(0.8);
+        }
+        40% {
+          transform: scale(1.4);
+        }
+        45% {
+          transform: scale(0.8);
         }
         50% {
           transform: scale(1);
         }
-        75% {
-          transform: scale(2);
-        }
-        100% {
-          transform: scale(1);
-        }
       }
 
-      .emoji {
+      .poke {
         font-size: 20px;
         display: none;
-        animation: emoji-wiggle 1s ease-in-out infinite alternate;
-        z-index: 4;
+        animation: poke-wiggle 0.5s ease-in-out infinite alternate;
       }
 
-      @keyframes emoji-wiggle {
+      @keyframes poke-wiggle {
         0% {
-          transform: translateY(0);
+          transform: translateX(0);
         }
         100% {
-          transform: translateY(-5px);
+          transform: translateX(-5px);
         }
       }
 
@@ -139,81 +121,190 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        z-index: 1;
+      }
+
+      .sprigatito {
+        height: 120px;
+        background-image: url("img/cat-sprigatito.gif");
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.7);
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+
+      .modal-content {
+        background: #fff;
+        padding: 1rem;
+        max-width: 90%;
+        width: 600px;
+        border-radius: 8px;
+        position: relative;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 0.5rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        color: #333;
+        cursor: pointer;
+      }
+
+      .modal iframe {
+        width: 100%;
+        height: 400px;
+        border: none;
       }
     </style>
   </head>
   <body>
-    <div class="--bg-container" id="--bg-container"></div>
+    <div class="bg-container" id="bg-container"></div>
 
     <div class="details">
-      <div class="leaf-decor">🍃 🍃 🍃</div>
-      <div class="title">You're invited!</div>
-      <div class="subtitle">Saoirse's 6th Birthday Party</div>
-      <p>Sunday 8th June</p>
-      <p>2:30 PM</p>
-      <p><br />Reynard Street Neighbourhood House<br />Coburg</p>
-      <p><a href="tel:0411595882">0411 595 882</a></p>
-      <div class="leaf-decor">🍃 🍃 🍃</div>
+      <div class="title">
+        <img src="img/saoirse.png" aria-label="Saoirse" />
+      </div>
+      <p>is turning 6!</p>
+      <p>Come and party with us</p>
+      <p>2:30 - 5pm, Sunday 8th June</p>
+      <p>
+        <a class="venue" role="button" tabindex="0" id="openMap"
+          >Reynard Street Neighbourhood House</a
+        >
+      </p>
+      <p>RSVP to Mia <a href="tel:0411595882">0411 595 882</a></p>
+      <div class="sprigatito"></div>
+    </div>
+    <div class="playlist">
+      <iframe
+        style="border-radius: 12px; max-width: 70vw"
+        src="https://open.spotify.com/embed/playlist/0TVuC1HRU8b5PG7srQkdc4?utm_source=generator&theme=0"
+        width="70%"
+        height="152"
+        frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+      ></iframe>
+    </div>
+
+    <div
+      class="modal"
+      id="mapModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="mapTitle"
+    >
+      <div class="modal-content">
+        <button class="close-btn" id="closeMap" aria-label="Close map modal">
+          &times;
+        </button>
+        <h2 id="mapTitle">Venue Location</h2>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3154.7983379337165!2d144.9592438!3d-37.74787500000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65b52e496c12f%3A0x4ae99e33bc96e906!2sReynard%20Street%20Neighbourhood%20House!5e0!3m2!1sen!2sau!4v1745493087886!5m2!1sen!2sau"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
     </div>
 
     <script>
-      const colors = ["red", "black", "white"];
+      /* Pokemon stuff */
       const container = document.getElementById("bg-container");
-      let activeCircle;
-
-      function createCircle() {
+      function addPokeball() {
         const div = document.createElement("div");
-        div.classList.add(
-          "circle",
-          colors[Math.floor(Math.random() * colors.length)]
-        );
+        div.classList.add("ball");
         div.style.top = `${Math.random() * 100}vh`;
         div.style.left = `${Math.random() * 100}vw`;
         container.appendChild(div);
         return div;
       }
 
-      function activateRandomCircle() {
-        if (activeCircle) {
-          activeCircle.classList.remove("animated");
+      let activeBall;
+      function activateBall() {
+        if (activeBall) {
+          activeBall.classList.remove("animated");
         }
-        const allCircles = document.querySelectorAll(".circle");
-        activeCircle =
-          allCircles[Math.floor(Math.random() * allCircles.length)];
-        activeCircle.classList.add("animated");
-        activeCircle.addEventListener("click", burstCircle);
+        const balls = document.querySelectorAll(".ball");
+        activeBall = balls[Math.floor(Math.random() * balls.length)];
+        activeBall.classList.add("animated");
+        activeBall.addEventListener("click", revealPokemon);
 
         setTimeout(() => {
-          if (activeCircle) {
-            activeCircle.classList.remove("animated");
-            activeCircle.removeEventListener("click", burstCircle);
+          if (activeBall) {
+            activeBall.classList.remove("animated");
+            activeBall.removeEventListener("click", revealPokemon);
           }
-          setTimeout(activateRandomCircle, 1000);
+          setTimeout(activateBall, 1000);
         }, 10000);
       }
 
-      function burstCircle(e) {
-        const emoji = document.createElement("div");
-        emoji.classList.add("emoji");
-        emoji.textContent = "🎉";
-        emoji.style.position = "absolute";
-        emoji.style.top = e.target.style.top;
-        emoji.style.left = e.target.style.left;
-        container.appendChild(emoji);
+      function revealPokemon(e) {
+        const poke = document.createElement("div");
+        poke.classList.add("poke");
+        poke.textContent = "🎉";
+        poke.style.position = "absolute";
+        poke.style.top = e.target.style.top;
+        poke.style.left = e.target.style.left;
+        container.appendChild(poke);
         e.target.style.display = "none";
-        emoji.style.display = "block";
+        poke.style.display = "block";
         setTimeout(() => {
           e.target.style.display = "block";
-          emoji.remove();
+          poke.remove();
         }, 3000);
       }
 
-      for (let i = 0; i < 50; i++) {
-        createCircle();
+      for (let i = 0; i < 25; i++) {
+        addPokeball();
       }
 
-      activateRandomCircle();
+      activateBall();
+
+      /* Map modal */
+
+      const modal = document.getElementById("mapModal");
+      const openBtn = document.getElementById("openMap");
+      const closeBtn = document.getElementById("closeMap");
+
+      function openModal() {
+        modal.style.display = "flex";
+        closeBtn.focus();
+      }
+
+      function closeModal() {
+        modal.style.display = "none";
+        openBtn.focus();
+      }
+
+      openBtn.addEventListener("click", openModal);
+      openBtn.addEventListener("keypress", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openModal();
+        }
+      });
+
+      closeBtn.addEventListener("click", closeModal);
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.style.display === "flex") {
+          closeModal();
+        }
+      });
     </script>
   </body>
 </html>
