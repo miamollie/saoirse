@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saoirse's Birthday Party</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Fredoka", sans-serif;
+        background: #dfffe2;
+        color: #2c5f2d;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .header {
+        padding: 40px 20px 20px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .header img {
+        width: 300px;
+        max-width: 80%;
+        border-radius: 20px;
+      }
+
+      .title {
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin: 20px 0 10px;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        color: #3e7d34;
+        margin-bottom: 30px;
+      }
+
+      .details {
+        background: white;
+        max-width: 600px;
+        margin: auto;
+        padding: 30px;
+        border-radius: 50%;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 2;
+      }
+
+      .details p {
+        font-size: 1.2rem;
+        margin: 10px 0;
+      }
+
+      .leaf-decor {
+        font-size: 2rem;
+        margin: 20px 0;
+      }
+
+      .circle {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        position: absolute;
+        animation: float 20s infinite ease-in-out;
+      }
+
+      .red {
+        background: red;
+      }
+      .black {
+        background: black;
+      }
+      .white {
+        background: white;
+        border: 1px solid #ccc;
+      }
+
+      .animated {
+        animation: throb 1.5s ease-in-out infinite !important;
+        z-index: 3;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translate(0, 0);
+        }
+        50% {
+          transform: translate(10px, 10px);
+        }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
+
+      @keyframes throb {
+        0% {
+          transform: scale(1);
+        }
+        25% {
+          transform: scale(2);
+        }
+        50% {
+          transform: scale(1);
+        }
+        75% {
+          transform: scale(2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .emoji {
+        font-size: 20px;
+        display: none;
+        animation: emoji-wiggle 1s ease-in-out infinite alternate;
+        z-index: 4;
+      }
+
+      @keyframes emoji-wiggle {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-5px);
+        }
+      }
+
+      .bg-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="--bg-container" id="--bg-container"></div>
+
+    <div class="details">
+      <div class="leaf-decor">🍃 🍃 🍃</div>
+      <div class="title">You're invited!</div>
+      <div class="subtitle">Saoirse's 6th Birthday Party</div>
+      <p>Sunday 8th June</p>
+      <p>2:30 PM</p>
+      <p><br />Reynard Street Neighbourhood House<br />Coburg</p>
+      <p><a href="tel:0411595882">0411 595 882</a></p>
+      <div class="leaf-decor">🍃 🍃 🍃</div>
+    </div>
+
+    <script>
+      const colors = ["red", "black", "white"];
+      const container = document.getElementById("bg-container");
+      let activeCircle;
+
+      function createCircle() {
+        const div = document.createElement("div");
+        div.classList.add(
+          "circle",
+          colors[Math.floor(Math.random() * colors.length)]
+        );
+        div.style.top = `${Math.random() * 100}vh`;
+        div.style.left = `${Math.random() * 100}vw`;
+        container.appendChild(div);
+        return div;
+      }
+
+      function activateRandomCircle() {
+        if (activeCircle) {
+          activeCircle.classList.remove("animated");
+        }
+        const allCircles = document.querySelectorAll(".circle");
+        activeCircle =
+          allCircles[Math.floor(Math.random() * allCircles.length)];
+        activeCircle.classList.add("animated");
+        activeCircle.addEventListener("click", burstCircle);
+
+        setTimeout(() => {
+          if (activeCircle) {
+            activeCircle.classList.remove("animated");
+            activeCircle.removeEventListener("click", burstCircle);
+          }
+          setTimeout(activateRandomCircle, 1000);
+        }, 10000);
+      }
+
+      function burstCircle(e) {
+        const emoji = document.createElement("div");
+        emoji.classList.add("emoji");
+        emoji.textContent = "🎉";
+        emoji.style.position = "absolute";
+        emoji.style.top = e.target.style.top;
+        emoji.style.left = e.target.style.left;
+        container.appendChild(emoji);
+        e.target.style.display = "none";
+        emoji.style.display = "block";
+        setTimeout(() => {
+          e.target.style.display = "block";
+          emoji.remove();
+        }, 3000);
+      }
+
+      for (let i = 0; i < 50; i++) {
+        createCircle();
+      }
+
+      activateRandomCircle();
+    </script>
+  </body>
+</html>
