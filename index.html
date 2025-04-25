@@ -50,7 +50,7 @@
         font-size: 1.2rem;
         margin: 10px 0;
       }
-      .details a {
+      .details .tel {
         color: #2c5f2d;
       }
 
@@ -165,6 +165,48 @@
         height: 400px;
         border: none;
       }
+      .cta-button {
+        font-family: "Fredoka", sans-serif;
+        font-size: 1.1rem;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin: 10px;
+        transition: transform 0.1s ease-in-out;
+        box-shadow: 4px 4px 0px #4b0082; /* 90s shadow purple */
+        width: 25%;
+      }
+
+      .cta-button:active,
+      .cta-button:hover {
+        transform: translate(4px, 4px);
+        box-shadow: none;
+      }
+
+      .cta-primary {
+        background-color: #f9c931;
+        color: white;
+      }
+
+      .cta-secondary {
+        background-color: white;
+        color: #f9c931;
+        border: 2px solid #f9c931;
+      }
+
+      /* Mobile breakpoint */
+      @media only screen and (max-width: 768px) {
+        .cta-button {
+          width: 80%;
+        }
+
+        .sprigatito {
+          background-repeat: no-repeat;
+        }
+      }
     </style>
   </head>
   <body>
@@ -174,15 +216,29 @@
       <div class="title">
         <img src="img/saoirse.png" aria-label="Saoirse" />
       </div>
-      <p>is turning 6!</p>
       <p>Come and party with us</p>
+
+      <p>Saoirse is turning 6!</p>
       <p>2:30 - 5pm, Sunday 8th June</p>
-      <p>
-        <a class="venue" role="button" tabindex="0" id="openMap"
-          >Reynard Street Neighbourhood House</a
+      <p>Reynard Street Neighbourhood House</p>
+      <p class="cta-group">
+        <a
+          class="cta-button cta-primary"
+          role="button"
+          tabindex="0"
+          id="openMap"
+          >See Map</a
         >
+        <a
+          href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Saoirse%27s+6th+Birthday+Party&dates=20250608T043000Z/20250608T070000Z&details=Join+us+for+fun+and+games!&location=Reynard+Street+Neighbourhood+House%2C+104a+Reynard+St%2C+Coburg+VIC+3058%2C+Australia"
+          target="_blank"
+          class="cta-button cta-secondary"
+        >
+          Add to Calendar
+        </a>
       </p>
-      <p>RSVP to Mia <a href="tel:0411595882">0411 595 882</a></p>
+      <p>RSVP to Mia <a class="tel" href="tel:0411595882">0411 595 882</a></p>
+
       <div class="sprigatito"></div>
     </div>
     <div class="playlist">
