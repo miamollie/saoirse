@@ -11,7 +11,7 @@
     <style>
       html,
       body {
-        height: 100%;
+        min-height: 100%;
       }
       body {
         margin: 0;
@@ -20,15 +20,14 @@
         color: #2c5f2d;
         text-align: center;
         overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
       }
 
-h2 {font-weight: normal;}
-h1 {font-size: 5em; margin: 0;}
+      h2 {font-weight: normal;}
+      h1 {font-size: 5em; margin: 0;}
       .title img {
         width: 100%;
+        position: relative;
+        top: 45px;
       }
 
       .subtitle {
@@ -37,15 +36,22 @@ h1 {font-size: 5em; margin: 0;}
         margin-bottom: 30px;
       }
 
+      .grid {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        margin-top: 15px; 
+        margin-bottom: 15px; 
+      }
+
       .details {
         background: white;
         max-width: 600px;
         width: 80vw;
-        margin: 30px auto;
+        margin: auto;
         padding: 30px;
         border-radius: 5%;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        position: relative;
       }
 
       .details p {
@@ -214,7 +220,7 @@ h1 {font-size: 5em; margin: 0;}
   </head>
   <body>
     <div class="bg-container" id="bg-container"></div>
-
+  <div class="grid">
     <div class="details">
       <div class="title">
         <img src="img/saoirse.png" aria-label="Saoirse" />
@@ -248,13 +254,14 @@ h1 {font-size: 5em; margin: 0;}
       <iframe
         src="https://open.spotify.com/embed/playlist/0TVuC1HRU8b5PG7srQkdc4?utm_source=generator&theme=0"
         width="85%"
-        height="152"
+        height="auto"
+        min-height="100px"
         frameborder="0"
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         loading="lazy"
       ></iframe>
     </div>
-
+</div>
     <div
       class="modal"
       id="mapModal"
